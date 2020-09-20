@@ -3,7 +3,7 @@ class Board {
       this.width    = width
       this.height   = height
       this.cellSize = cellSize
-      this.columns  = {}
+      this.columns  = []
       this.createGrid()
     }
   
