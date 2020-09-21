@@ -1,4 +1,5 @@
-let board   = new Board(window.innerWidth * 2, window.innerHeight * 2, 20)
+let board   = new Board(window.innerWidth, window.innerHeight, 10)
+setInterval(board.update, 500)
 
 let cells   = Array.from(document.getElementsByClassName('cell'))
 let colors  = ['a', 'b', 'c', 'd',]
