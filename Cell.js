@@ -1,6 +1,7 @@
 class Cell {
   constructor(left, top, size, column, id, cellObject, neighborColumns) {
     this.id              = id
+    this.HTMLid          = column.id.toString() + '_' + id.toString() 
     this.cellObject      = cellObject
     this.column          = column
     this.board           = this.column.board
@@ -9,12 +10,12 @@ class Cell {
     this.top             = top;
     this.size            = size; 
     this.neighbors       = {}  
-    this.state           = {}                                               /* remember: the neighborhood can be as large as you want because you can reference your */
-    this.draw()
+    this.state           = {}   
+    this.addToLookupTable()                                            /* remember: the neighborhood can be as large as you want because you can reference your */
+    this.draw()          
   }
 
   draw() {
-  
     let cell             = document.createElement('div')
     let body             = document.getElementsByTagName('body')[0]
     cell.style.position  = 'absolute'
@@ -24,17 +25,17 @@ class Cell {
     cell.style.height    = this.size  + 'px'
     cell.style.margin    = 'none'
     cell.classList.add     ('cell')
-    cell.dataset.cell    = this
-
+    cell.dataset.cell    = this.HTMLid
     console.log('hello')
-
     body.append(cell)
     this.div = cell
   }
 
-  findNeighbors(){
-    console.log('finding neighbors')
+  addToLookupTable(){
+    this.column.board.cellLookup[this.HTMLid] = this
+  }
 
+  findNeighbors(){
     this.neighbors.top                                         = this.cellObject[this.id - this.column.board.cellSize ]
     this.neighbors.bottom                                      = this.cellObject[this.id + this.column.board.cellSize ]
     if(this.neighborColumns.left )  this.neighbors.left        = this.neighborColumns.left.cells  [this.id]

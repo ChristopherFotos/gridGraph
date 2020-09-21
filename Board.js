@@ -1,16 +1,19 @@
 class Board {
   constructor(width, height, cellSize, stepFunction) {
-    this.width        = width
-    this.height       = height
-    this.cellSize     = cellSize
-    this.columns      = {}
-    this.cells        = []
-    this.columnArray  = []
-    this.stepFunction = stepFunction
-    this.createGrid()
-    this.createCells()
-    this.getCells()
-    this.findCellNeighbors()
+    this.width        = width  ;
+    this.height       = height ;
+    this.cellSize     = cellSize; 
+    this.columns      = {};
+    this.cells        = [];
+    this.cellLookup   = {};
+    this.columnArray  = [];
+    this.stepFunction = stepFunction;
+    this.createGrid();
+    this.createCells();
+    this.getCells();
+    this.findCellNeighbors();
+    setInterval(this.update, 300, this);
+    
     console.log(this.cells)
   }
 
@@ -49,10 +52,14 @@ class Board {
     })
   }
 
-  update(){
-    this.cells.forEach(c => {
-      this.stepFunction(c)
+  update(board){
+    board.cells.forEach(c => {
+      board.stepFunction(c)
     })
+  }
+
+  start(){
+    
   }
 }
 

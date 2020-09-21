@@ -1,14 +1,17 @@
-let board   = new Board(window.innerWidth, window.innerHeight, 10,)
-setInterval(board.update, 500)
+let board   = new Board(window.innerWidth, window.innerHeight, 10, step)
+
 
 let cells   = Array.from(document.getElementsByClassName('cell'))
 let colors  = ['a', 'b', 'c', 'd',]
 let state   = {}
 
 
-// function step(cell){
-//     if (cell.neighbors.top)
-// }
+function step(cell){
+    if( cell.neighbors.top && cell.neighbors.top.state.alive){
+        cell.state.alive = true
+        cell.div.classList.add(colors[Math.floor(Math.random() * 3)])
+    }
+}
 
 
 // modes to draw different kinds of square (put these options in an expandable menu)
@@ -35,7 +38,8 @@ cells.forEach(c=> {
     c.addEventListener('mouseenter', e => {
         if(state.drawing){
             e.target.classList.add(colors[Math.floor(Math.random() * 3)])
-            e.target.dataset.cell.state.alive = true
+            board.cellLookup[e.target.dataset.cell].state.alive = true
+            console.log(board.cellLookup[e.target.dataset.cell].neighbors.bottom.div)
         }
     })
 
