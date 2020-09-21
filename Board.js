@@ -1,11 +1,12 @@
 class Board {
-  constructor(width, height, cellSize) {
-    this.width    = width
-    this.height   = height
-    this.cellSize = cellSize
-    this.columns  = {}
-    this.cells    = []
-    this.columnArray = []
+  constructor(width, height, cellSize, stepFunction) {
+    this.width        = width
+    this.height       = height
+    this.cellSize     = cellSize
+    this.columns      = {}
+    this.cells        = []
+    this.columnArray  = []
+    this.stepFunction = stepFunction
     this.createGrid()
     this.createCells()
     this.getCells()
@@ -49,7 +50,9 @@ class Board {
   }
 
   update(){
-
+    this.cells.forEach(c => {
+      this.stepFunction(c)
+    })
   }
 }
 
