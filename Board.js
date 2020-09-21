@@ -12,7 +12,7 @@ class Board {
     this.createCells();
     this.getCells();
     this.findCellNeighbors();
-    setInterval(this.update, 300, this);
+    setInterval(this.update, 2000, this);
     
     console.log(this.cells)
   }

@@ -7,9 +7,25 @@ let state   = {}
 
 
 function step(cell){
-    if( cell.neighbors.top && cell.neighbors.top.state.alive){
-        cell.state.alive = true
-        cell.div.classList.add(colors[Math.floor(Math.random() * 3)])
+    let deadNeighbors = 0
+    let liveNeighbors = 0
+    let keys = Object.keys(cell.neighbors)
+    keys.forEach(k => {
+        if(cell.neighbors[k] && cell.neighbors[k].state.alive){
+            liveNeighbors    += 1
+        } else deadNeighbors += 1
+    })
+    if(cell.state.alive){
+        if(liveNeighbors !== 2 && liveNeighbors !== 3){
+            cell.state.alive   = false
+            cell.div.classList = ['cell']
+        }
+    }
+    if(!cell.state.alive){
+        if(liveNeighbors === 3){
+            cell.state.alive = true
+            cell.div.classList.add(colors[Math.floor(Math.random() * 3)])
+        }
     }
 }
 
