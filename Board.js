@@ -12,9 +12,6 @@ class Board {
     this.createCells();
     this.getCells();
     this.findCellNeighbors();
-    setInterval(this.update, 2000, this);
-    
-    console.log(this.cells)
   }
 
 
@@ -56,10 +53,29 @@ class Board {
     board.cells.forEach(c => {
       board.stepFunction(c)
     })
+
+    board.cells.forEach(c => {
+      if(c.newState){
+      c.adoptNewState()
+      if(c.newState.updates){
+        c.newState.updates()
+      }
+      }
+    })
   }
 
   start(){
-    
+    this.stopID = setInterval(this.update, 2000, this)
+  }
+
+
+  stop(){
+    if(this.stopID)clearInterval(this.stopID)
+  }
+
+  clear(){
+    this.columns = {}
+    this.createGrid()
   }
 }
 

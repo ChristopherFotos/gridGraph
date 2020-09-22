@@ -16,7 +16,9 @@ class Column {
 
   makeColumn() {
     for (let i = 0; i < window.innerHeight + (this.width + 1); i += this.width) {
-      this.cells[i]= new Cell(this.left, i, this.width, this, i, this.cells, {left: this.board.columns[this.id-this.width], right:this.board.columns[this.id+this.width]})
+      this.cells[i] = new Cell(this.left, i, this.width, this, i, this.cells, {left: this.board.columns[this.id-this.width], right:this.board.columns[this.id+this.width]})
     }
   }
+
+
 }

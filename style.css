@@ -4,7 +4,7 @@ body {
 
 .cell {
     transition: all 0.8s ease-in-out;
-    background-color: #454545;
+    background-color: #101010;
 }
 
 .a {
@@ -42,6 +42,7 @@ body {
 .looking {
     box-shadow: inset 0px 0px 7px 0px rgba(100, 100, 255, 0.5);
     z-index: 10;
+    transition: all 0.05s;
 }
 
 
