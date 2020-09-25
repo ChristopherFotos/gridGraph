@@ -1,4 +1,4 @@
-let board   = new Board(window.innerWidth, window.innerHeight, 40, step)
+let board   = new Board(window.innerWidth * 2, window.innerHeight * 2, 20, step)
 
 
 let cells   = Array.from(document.getElementsByClassName('cell'))
@@ -60,8 +60,7 @@ cells.forEach(c=> {
 })
     c.addEventListener('mousedown', e => {
         e.target.classList.add(colors[Math.floor(Math.random() * 3)])
-            board.cellLookup[e.target.dataset.cell].state.alive = true
-            
+            board.cellLookup[e.target.dataset.cell].state.alive = true       
     })
 })
 

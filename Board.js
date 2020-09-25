@@ -5,6 +5,7 @@ class Board {
     this.cellSize     = cellSize; 
     this.columns      = {};
     this.cells        = [];
+    this.state        = {}
     this.cellLookup   = {};
     this.columnArray  = [];
     this.stepFunction = stepFunction;
@@ -65,7 +66,7 @@ class Board {
   }
 
   start(){
-    this.stopID = setInterval(this.update, 2000, this)
+    this.stopID = setInterval(this.update, 300, this)
   }
 
 
