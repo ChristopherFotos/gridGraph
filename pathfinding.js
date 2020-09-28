@@ -1,11 +1,10 @@
-let board   = new Board(window.innerWidth, window.innerHeight, 30, findPath)
+let board   = new Board(window.innerWidth, window.innerHeight, 30, findPath, 300)
 
 let cells   = Array.from(document.getElementsByClassName('cell'))
 
 function findPath(){
-    if(nodeInfo.start && nodeInfo.end && !board.state.path){
+    if( nodeInfo.start && nodeInfo.end && !board.state.path){
         board.state.path = aStar()
-        console.log(board.state.path)
         board.state.path.forEach(c => {
             c.div.classList.add('start')
         })

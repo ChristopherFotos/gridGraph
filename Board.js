@@ -1,8 +1,10 @@
 class Board {
-  constructor(width, height, cellSize, stepFunction) {
+  constructor(width, height, cellSize, stepFunction, updateInterval) {
     this.width        = width  ;
     this.height       = height ;
+    this.cellByCell   = false
     this.cellSize     = cellSize; 
+    this.updateInterval = updateInterval
     this.columns      = {};
     this.cells        = [];
     this.state        = {}
@@ -51,22 +53,26 @@ class Board {
   }
 
   update(board){
-    board.cells.forEach(c => {
-      board.stepFunction(c)
-    })
+   if(this.cellByCell){
+      board.cells.forEach(c => {
+        board.stepFunction(c)
+      })
 
-    board.cells.forEach(c => {
-      if(c.newState){
-      c.adoptNewState()
-      if(c.newState.updates){
-        c.newState.updates()
-      }
-      }
-    })
+      board.cells.forEach(c => {
+        if(c.newState){
+        c.adoptNewState()
+        if(c.newState.updates){
+          c.newState.updates()
+        }
+        }
+      })
+    } else {
+      board.stepFunction()
+    }
   }
 
   start(){
-    this.stopID = setInterval(this.update, 300, this)
+    this.stopID = setInterval(this.update, this.updateInterval, this)
   }
 
 
