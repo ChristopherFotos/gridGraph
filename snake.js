@@ -1,17 +1,18 @@
 let int = 17
-let board = new Board(window.innerWidth* 0.7, window.innerHeight* 0.7, int, step, 100) 
+let board = new Board(window.innerWidth* 0.2, window.innerHeight* 0.4, int, step, 250) 
 
 function step(){
     grow()
     moveSnake()
-    
+    kill()
 }
 
 
 let the_snake = {
-    cells: {1: board.cellLookup[`${int * 25}_0`]},
-    startLength: 5,
+    cells: {1: board.cellLookup[`${int * 6}_0`]},
+    startLength: 1,
     direction: 'right',
+    started: false
 }
 
 function makeSnake(snake){
@@ -137,22 +138,55 @@ function grow (){
                 break;
         }
 
-        the_snake.cells[Object.keys(the_snake.cells).length + 1] = the_snake.cells[Object.keys(the_snake.cells).length].neighbors[picker]
+        if(the_snake.cells[Object.keys(the_snake.cells).length].neighbors[picker] && 
+           !Array.from(the_snake.cells[Object.keys(the_snake.cells).length].neighbors[picker].div.classList).includes('a')) {
+            the_snake.cells[Object.keys(the_snake.cells).length + 1] = the_snake.cells[Object.keys(the_snake.cells).length].neighbors[picker]
+        } else {
+            for(let cell in the_snake.cells[Object.keys(the_snake.cells).length].neighbors){
+                if(the_snake.cells[Object.keys(the_snake.cells).length].neighbors[cell] && cell != 'bottomRight' && cell != 'topRight' && cell != 'bottomLeft' && cell != 'bottomLeft'){
+                    the_snake.cells[Object.keys(the_snake.cells).length + 1] = the_snake.cells[Object.keys(the_snake.cells).length].neighbors[cell]
+                    break
+                }
+            }
+        }
+
         the_snake.startLength += 1
-
-        // the_snake.cells[the_snake.startLength + 1] = the_snake.cells[the_snake.startLength].neighbors[picker]
-        // the_snake.startLength = the_snake.startingLength
-
 
         the_snake.cells[1].chunk = false
         the_snake.cells[1].div.classList.remove('start')
 
         placeChunk()
+        if(board.updateInterval > 50){
+            board.updateInterval -= 5; 
+            board.stop(); 
+            board.start()
+        }
     }
 }
 
 
+function kill (){
+    let picker
+    switch (the_snake.direction) {
+        case 'left':
+            picker = 'left'
+            break;
+        case 'right':
+            picker = 'right'
+            break;
+        case 'up':
+            picker = 'top'
+            break;
+        case 'down':
+            picker = 'bottom'
+            break;
+    }
 
+    let list = Array.from(the_snake.cells[1].neighbors[picker].div.classList)
+    if(list.includes('a')){
+        board.stop()
+    }
+}
 
 
 
@@ -160,23 +194,32 @@ function grow (){
 document.addEventListener('keydown', e => {
     switch (e.key) {
         case 'd':
-            the_snake.direction = 'right'
+            if(the_snake.direction !== 'left') the_snake.direction = 'right'
+            if(!the_snake.started){
+                board.start()
+                the_snake.started = true
+            }
             break;
         case 'a':
-            the_snake.direction = 'left'
+            if(the_snake.direction !== 'right') the_snake.direction = 'left'
+            if(!the_snake.started){
+                board.start()
+                the_snake.started = true
+            }
             break;
         case 'w':
-            the_snake.direction = 'up'
+            if(the_snake.direction !== 'down') the_snake.direction = 'up'
+            if(!the_snake.started){
+                board.start()
+                the_snake.started = true
+            }
             break;
         case 's':
-            the_snake.direction = 'down'
-            break;
-
-        case 'f':
-            board.start()
-            break;
-    
-        default:
+            if(the_snake.direction !== 'up') the_snake.direction = 'down'
+            if(!the_snake.started){
+                board.start()
+                the_snake.started = true
+            }
             break;
     }
 })
