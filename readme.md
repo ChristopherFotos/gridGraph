@@ -6,7 +6,7 @@ instructions on which scripts to uncomment in order to test the different demos.
 
 <h3>A-Star:</h3>
 
-A* is a pathfinding algorithm that's guaranteed to find the shortest possible paths between two points.
+A* is a pathfinding algorithm that's guaranteed to find the shortest possible path between two points.
 
 Click a square to place your start node. 
 Then press the '2' key and click another square to place your end node.
