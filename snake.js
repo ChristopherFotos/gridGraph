@@ -1,5 +1,5 @@
 let int = 17
-let board = new Board(window.innerWidth* 0.2, window.innerHeight* 0.4, int, step, 250) 
+let board = new Board(window.innerWidth* 0.2, window.innerHeight* 0.4, int, step, 250, false) 
 
 function step(){
     grow()

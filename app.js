@@ -1,4 +1,4 @@
-let board   = new Board(window.innerWidth * 2, window.innerHeight * 2, 20, step)
+let board   = new Board(window.innerWidth * 2, window.innerHeight * 2, 20, step, 300, true)
 
 
 let cells   = Array.from(document.getElementsByClassName('cell'))
