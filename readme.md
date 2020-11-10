@@ -23,4 +23,8 @@ When you're ready, press the 'G' key and the computer will find the shortest pat
 <h3>Snake:</h3> 
 
 What's there to say? It's snake. Use the WASD keys to move around, and don't hit the sides. 
-    
+
+<h2>Using the Grid Graph</h2>
+
+This section will be expanded soon. Right now the gridgraph paints divs to the screen for every cell. Obviously this is inefficient and 
+suits precious few use cases, so I want to change that before I write out full usage instructions.
