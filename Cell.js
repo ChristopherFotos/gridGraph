@@ -12,7 +12,7 @@ class Cell {
     this.top             = top;
     this.size            = size; 
     this.neighbors       = {}    
-    this.addToLookupTable()                                             /* remember: the neighborhood can be as large as you want because you can reference your */
+    this.addToLookupTable()
     this.draw()          
   }
 
