@@ -1,5 +1,5 @@
 class Board {
-  constructor(width, height, cellSize, stepFunction, updateInterval, cellByCell = true, ctx) {
+  constructor(width, height, cellSize, stepFunction, updateInterval, cellByCell = true, customProperties, draw) {
     this.width        = width  ;
     this.height       = height ;
     this.cellByCell   = cellByCell;
@@ -8,7 +8,8 @@ class Board {
     this.columns      = {};
     this.cells        = [];
     this.state        = {}
-    this.ctx          = ctx 
+    this.customProperties = customProperties;
+    this.draw         = draw
     this.cellLookup   = {};
     this.columnArray  = [];
     this.stepFunction = stepFunction;

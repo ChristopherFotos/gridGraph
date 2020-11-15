@@ -17,9 +17,7 @@ class Cell {
   }
 
   draw() {
-    this.board.ctx.beginPath();
-    this.board.ctx.rect(this.top, this.left, this.size, this.size);
-    this.board.ctx.stroke();
+    this.board.draw.bind(this)()
   }
 
   addToLookupTable(){
