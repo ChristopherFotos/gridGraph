@@ -7,7 +7,6 @@ class Column {
     this.range  = [this.x, this.x + this.width]
     this.cells  = {}
     this.id     = id
-    // this.makeColumn()
   }
 
   addCell(left, top, size, column) {

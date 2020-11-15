@@ -17,18 +17,9 @@ class Cell {
   }
 
   draw() {
-    let cell             = document.createElement('div')
-    let body             = document.getElementsByTagName('body')[0]
-    cell.style.position  = 'absolute'
-    cell.style.left      = this.left  + 'px'
-    cell.style.top       = this.top   + 'px'
-    cell.style.width     = this.size  + 'px'
-    cell.style.height    = this.size  + 'px'
-    cell.style.margin    = 'none'
-    cell.classList.add     ('cell')
-    cell.dataset.cell    = this.HTMLid
-    body.append(cell)
-    this.div = cell
+    this.board.ctx.beginPath();
+    this.board.ctx.rect(this.top, this.left, this.size, this.size);
+    this.board.ctx.stroke();
   }
 
   addToLookupTable(){
@@ -43,7 +34,7 @@ class Cell {
     if(this.neighborColumns.left )  this.neighbors.topLeft     = this.neighborColumns.left.cells  [this.id - this.size]
     if(this.neighborColumns.right)  this.neighbors.topRight    = this.neighborColumns.right.cells [this.id - this.size]
     if(this.neighborColumns.right)  this.neighbors.bottomRight = this.neighborColumns.right.cells [this.id + this.size]
-    if(this.neighborColumns.left)   this.neighbors.bottomLeft  = this.neighborColumns.left.cells  [this.id + this.size]
+    if(this.neighborColumns.left )   this.neighbors.bottomLeft = this.neighborColumns.left.cells  [this.id + this.size]
   }
 
   adoptNewState(){
