@@ -14,7 +14,6 @@ function draw(){
     console.log('drawing')
 }
 
-function log(){console.log('fish')}
 let board   = new Board(window.innerHeight, window.innerWidth, 5, log, 300, false, props, draw)
 
 
