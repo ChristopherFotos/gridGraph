@@ -71,7 +71,7 @@ function toggle(cell){
         cell.neighbors.bottom.newState.updates  = cell.neighbors.bottom.draw
     }
 
-    if(
+    if( //fall to the bottom left
         cell.neighbors.bottom && 
         cell.neighbors.bottom.state.particle &&
         cell.neighbors.bottomRight &&
@@ -80,13 +80,13 @@ function toggle(cell){
         !cell.neighbors.bottomLeft.state.particle
     ) {
         cell.newState.particle = false
-        cell.newState.update   = cell.draw
+        cell.newState.updates   = cell.draw
 
         cell.neighbors.bottomLeft.newState.particle = true
-        cell.neighbors.bottomLeft.newState.update = cell.neighbors.bottomLeft.draw
+        cell.neighbors.bottomLeft.newState.updates = cell.neighbors.bottomLeft.draw
     }
 
-    if(
+    if( // fall to the bottom right
         cell.neighbors.bottom && 
         cell.neighbors.bottom.state.particle &&
         cell.neighbors.bottomLeft &&
@@ -103,7 +103,7 @@ function toggle(cell){
 
 
 
-    if(!cell.neighbors.bottom){
+    if(!cell.neighbors.bottom){ // remain a particle if no bottom neighbor
         cell.newState.particle = true
     }
   }
