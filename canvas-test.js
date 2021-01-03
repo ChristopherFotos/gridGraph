@@ -17,6 +17,8 @@ let gameState = {
     empty: false
 }
 
+// add event listeners to track mouse position, whether the mouse is held down,
+// and the game state
 document.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX - 5;
     mouse.y = e.clientY - 5;
@@ -66,6 +68,13 @@ function toggle(cell){
   ){
     cell.newState.particle  = true
     cell.newState.updates   = cell.draw
+
+    for(n in cell.neighbors){
+        if(cell.neighbors[n]){
+            cell.neighbors[n].newState.particle = true
+            cell.neighbors[n].newState.updates  = cell.neighbors[n].draw
+        }
+      }
   }
 
   if(cell.state.particle){
@@ -122,7 +131,7 @@ function toggle(cell){
     }
   }
 
-  // if mouse is intersecting, and drawing, and empty
+  // if mouse is intersecting, and drawing, and empty is true
   if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height}) &&
     mouse.drawing && 
     gameState.empty 
