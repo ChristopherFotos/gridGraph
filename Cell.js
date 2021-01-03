@@ -1,5 +1,5 @@
 class Cell {
-  constructor(left, top, size, column, id, cellObject, neighborColumns) {
+  constructor(x, y, size, column, id, cellObject, neighborColumns) {
     this.id              = id
     this.HTMLid          = column.id.toString() + '_' + id.toString()
     this.state           = {} 
@@ -8,12 +8,14 @@ class Cell {
     this.column          = column
     this.board           = this.column.board
     this.neighborColumns = neighborColumns 
-    this.left            = left;
-    this.top             = top;
+    this.x               = x;
+    this.y               = y;
     this.size            = size; 
-    this.neighbors       = {}    
-    this.addToLookupTable()
-    this.draw()          
+    this.width           = size;
+    this.height          = size;
+    this.neighbors       = {}  ; 
+    this.addToLookupTable()    ;
+    this.draw()                ;
   }
 
   draw() {
@@ -39,8 +41,7 @@ class Cell {
     if(this.newState){
       this.state = this.newState
       if(this.newState.updates){
-        let boundUpdate = this.newState.updates.bind(this)
-        boundUpdate()
+        this.newState.updates.bind(this)() 
       }
     }
     this.newState = {}

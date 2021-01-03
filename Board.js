@@ -1,5 +1,5 @@
 class Board {
-  constructor(width, height, cellSize, stepFunction, updateInterval, cellByCell = true, customProperties, draw) {
+  constructor(width, height, cellSize, stepFunction, updateInterval = 300, cellByCell = true, props, draw) {
     this.width        = width  ;
     this.height       = height ;
     this.cellByCell   = cellByCell;
@@ -8,7 +8,7 @@ class Board {
     this.columns      = {};
     this.cells        = [];
     this.state        = {}
-    this.customProperties = customProperties;
+    this.props        = props;
     this.draw         = draw
     this.cellLookup   = {};
     this.columnArray  = [];
@@ -55,34 +55,35 @@ class Board {
   }
 
   update(board){
-    console.log(board.cellByCell)
+      if(board.cellByCell){
 
-      if(board.cellByCell){board.cells.forEach(c => {
-        board.stepFunction(c)
+
+      board.cells.forEach(c => {
+        c.adoptNewState()
+        // if(c.newState.updates){
+        //   // this could be causing an issue. this function call to be bound to the cell it pertains to.
+        //   c.newState.updates()
+        // }
       })
 
       board.cells.forEach(c => {
-        if(c.newState){
-        c.adoptNewState()
-        if(c.newState.updates){
-          c.newState.updates()
-        }
-        }
-      })}
+        board.stepFunction(c)
+      })
+    }
     
     if(!board.cellByCell){
-      console.log('false running')
       board.stepFunction()
     }
   }
 
   start(){
-    this.stopID = setInterval(this.update, this.updateInterval, this)
+    // shouldn't this.update be wrapped in an arrow function with 'this' as an argument?
+    this.stopID = setInterval(()=>this.update(this), this.updateInterval, this)
   }
 
 
   stop(){
-    if(this.stopID)clearInterval(this.stopID)
+    if(this.stopID) clearInterval(this.stopID)
   }
 
   clear(){
