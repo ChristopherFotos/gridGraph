@@ -12,6 +12,7 @@ class Board {
     this.draw         = draw
     this.cellLookup   = {};
     this.columnArray  = [];
+    this.subscribers  = []
     this.stepFunction = stepFunction;
     this.createGrid();
     this.createCells();
@@ -19,6 +20,13 @@ class Board {
     this.findCellNeighbors();
   }
 
+  addSubscriber(sub){
+    if(!sub.handleUpdate){
+      throw new Error('subscirbers must have a method called handleUpdate')
+    }
+
+    this.subscribers.push(sub)
+  }
 
   createGrid() {
     //Create columns
@@ -55,20 +63,20 @@ class Board {
   }
 
   update(board){
-      if(board.cellByCell){
-
-
-      board.cells.forEach(c => {
-        c.adoptNewState()
-        // if(c.newState.updates){
-        //   // this could be causing an issue. this function call to be bound to the cell it pertains to.
-        //   c.newState.updates()
-        // }
+      this.subscribers.forEach((s)=>{
+        s.handleUpdate()
       })
 
       board.cells.forEach(c => {
         board.stepFunction(c)
       })
+
+      if(board.cellByCell){
+      board.cells.forEach(c => {
+        c.adoptNewState()
+      })
+
+
     }
     
     if(!board.cellByCell){

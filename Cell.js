@@ -39,7 +39,7 @@ class Cell {
 
   adoptNewState(){
     if(this.newState){
-      this.state = this.newState
+      this.state = {...this.newState}
       if(this.newState.updates){
         this.newState.updates.bind(this)() 
       }
