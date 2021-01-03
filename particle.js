@@ -1,9 +1,6 @@
 class Particle {
-    constructor(x, y, state, update){
-        this.x = x;
-        this.y = y;
-        this.state = state
-        this.update = update
+    constructor(color){
+        this.color = color
     }
 }
 
