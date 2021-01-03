@@ -12,6 +12,11 @@ let mouse = {
     drawing: false,
 }
 
+// gameState object tracks what kind of operation the mouse click should do
+let gameState = {
+    empty: false
+}
+
 document.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX - 5;
     mouse.y = e.clientY - 5;
@@ -22,6 +27,12 @@ document.addEventListener('mousedown', e=>{
 })
 document.addEventListener('mouseup', e=>{
     mouse.drawing = false
+})
+
+document.addEventListener('keydown', e=>{
+    if(e.key === '1'){
+        gameState.empty = !gameState.empty
+    }
 })
 
 // setting up functions and variables for the board
@@ -39,7 +50,7 @@ function draw(){
     } 
     
     if(this.state.particle === false) { 
-        this.board.props.ctx.fillStyle = '#000'
+        this.board.props.ctx.fillStyle = '#000000'
     }
 
     this.board.props.ctx.fillRect(this.x, this.y, this.size, this.size);
@@ -47,8 +58,11 @@ function draw(){
 }
 
 function toggle(cell){
+
+    // if mouse if on cell, and drawing, and not empty
   if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height}) &&
-    mouse.drawing  
+    mouse.drawing && 
+    !gameState.empty 
   ){
     cell.newState.particle  = true
     cell.newState.updates   = cell.draw
@@ -106,6 +120,22 @@ function toggle(cell){
     if(!cell.neighbors.bottom){ // remain a particle if no bottom neighbor
         cell.newState.particle = true
     }
+  }
+
+  // if mouse is intersecting, and drawing, and empty
+  if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height}) &&
+    mouse.drawing && 
+    gameState.empty 
+  ) {
+      cell.newState.particle = false 
+      cell.newState.updates  = cell.draw
+
+      for(n in cell.neighbors){
+        if(cell.neighbors[n]){
+            cell.neighbors[n].newState.particle = false
+            cell.neighbors[n].newState.updates  = cell.neighbors[n].draw
+        }
+      }
   }
 
 }
