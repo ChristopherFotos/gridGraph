@@ -71,6 +71,34 @@ function toggle(cell){
         cell.neighbors.bottom.newState.updates  = cell.neighbors.bottom.draw
     }
 
+    if(
+        cell.neighbors.bottom && 
+        cell.neighbors.bottom.state.particle &&
+        cell.neighbors.bottomRight &&
+        cell.neighbors.bottomRight.state.particle &&
+        cell.neighbors.bottomLeft &&
+        !cell.neighbors.bottomLeft.state.particle
+    ) {
+        cell.neighbors.bottomLeft.newState.particle = true
+    }
+
+    if(
+        cell.neighbors.bottom && 
+        cell.neighbors.bottom.state.particle &&
+        cell.neighbors.bottomLeft &&
+        cell.neighbors.bottomLeft.state.particle &&
+        cell.neighbors.bottomRight &&
+        !cell.neighbors.bottomRight.state.particle
+    ) {
+        cell.newState.particle = false
+        cell.newState.updates  = cell.draw
+
+        cell.neighbors.bottomRight.newState.particle = true
+        cell.neighbors.bottomRight.newState.updates = cell.neighbors.bottomRight.draw
+    }
+
+
+
     if(!cell.neighbors.bottom){
         cell.newState.particle = true
     }
@@ -79,5 +107,5 @@ function toggle(cell){
 }
 
 // instantiating and starting the board
-let board   = new Board(window.innerWidth /2, window.innerHeight / 2, 2, toggle, 2, true, props, draw)
+let board   = new Board(window.innerWidth /3, window.innerHeight / 2, 4, toggle, 20, true, props, draw)
 board.start()
