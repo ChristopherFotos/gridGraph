@@ -1,6 +1,6 @@
 const canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = window.innerWidth / 3
+canvas.height = window.innerHeight / 2 
 
 const ctx    = canvas.getContext('2d')
 ctx.lineWidth = 1
@@ -141,5 +141,5 @@ function toggle(cell){
 }
 
 // instantiating and starting the board
-let board   = new Board(window.innerWidth /3, window.innerHeight / 2, 4, toggle, 20, true, props, draw)
+let board   = new Board(window.innerWidth /3, window.innerHeight / 2, 3, toggle, 20, true, props, draw)
 board.start()
