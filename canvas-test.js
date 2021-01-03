@@ -79,7 +79,11 @@ function toggle(cell){
         cell.neighbors.bottomLeft &&
         !cell.neighbors.bottomLeft.state.particle
     ) {
+        cell.newState.particle = false
+        cell.newState.update   = cell.draw
+
         cell.neighbors.bottomLeft.newState.particle = true
+        cell.neighbors.bottomLeft.newState.update = cell.neighbors.bottomLeft.draw
     }
 
     if(
