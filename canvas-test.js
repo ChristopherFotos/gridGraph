@@ -38,6 +38,9 @@ document.addEventListener('keydown', e=>{
     if(e.key === '2'){
         gameState.type = 'eraser'
     }
+    if(e.key === '3'){
+        gameState.type = 'fixed'
+    }
 })
 
 // setting up functions and variables for the board

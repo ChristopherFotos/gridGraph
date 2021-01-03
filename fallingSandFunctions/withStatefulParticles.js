@@ -1,12 +1,20 @@
-let colors = [
-    '#E8383C',
-    '#E3161B',
-    '#E77072',
-    '#CC292C',
-    '#CC292C',
-    '#E41014'
+let colors = {
+    particle: [
+        '#E8383C',
+        '#E3161B',
+        '#E77072',
+        '#CC292C',
+        '#CC292C',
+        '#E41014'
+    ],
 
-]
+    fixed: [
+        '#D4D4D4',
+        '#B1ABB5',
+        '#C4BDC8',
+        '#858588'
+    ]
+}
 
 function statefulDraw(){
     this.board.props.ctx.beginPath();
@@ -28,21 +36,34 @@ function statefulToggle(cell){
   // if mouse is on cell, and drawing, and not empty
   if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height}) &&
     mouse.drawing && 
-    gameState.type === 'particle'
+    (gameState.type === 'particle'|| gameState.type === 'fixed')
+
   ){
-    cell.newState.particle  = {color: colors[Math.floor(Math.random() * colors.length - 1)]}
+    cell.newState.particle  = {
+        color: colors[gameState.type][Math.floor(Math.random() * colors[gameState.type].length - 1)], 
+        movement: gameState.type === 'fixed' ? 'fixed' : 'normal'
+    }
+
     cell.newState.updates   = cell.draw
 
     for(n in cell.neighbors){
         if(cell.neighbors[n]){
-            cell.neighbors[n].newState.particle = {color: colors[Math.floor(Math.random() * colors.length - 1)]}
+            cell.neighbors[n].newState.particle = {
+                color: colors[gameState.type][Math.floor(Math.random() * colors[gameState.type].length - 1)],
+                movement: gameState.type === 'fixed' ? 'fixed' : 'normal'
+            }
             cell.neighbors[n].newState.updates  = cell.neighbors[n].draw
         }
       }
   }
 
-  if(cell.state.particle){
-    if(cell.neighbors.bottom && !cell.neighbors.bottom.state.particle){
+  if(cell.state.particle){ // fall down
+    if( cell.neighbors.bottom && 
+        !cell.neighbors.bottom.state.particle &&
+        cell.state.particle.movement !== 'fixed'
+        ){
+
+        console.log('fall down')
         cell.newState.particle = false
         cell.newState.updates  = cell.draw
 
@@ -64,8 +85,10 @@ function statefulToggle(cell){
         cell.neighbors.bottomRight &&
         cell.neighbors.bottomRight.state.particle &&
         cell.neighbors.bottomLeft &&
-        !cell.neighbors.bottomLeft.state.particle
+        !cell.neighbors.bottomLeft.state.particle &&
+        cell.state.particle.movement !== 'fixed'
     ) {
+        console.log('fall left')
         cell.newState.particle = false
         cell.newState.updates   = cell.draw
 
@@ -79,8 +102,10 @@ function statefulToggle(cell){
         cell.neighbors.bottomLeft &&
         cell.neighbors.bottomLeft.state.particle &&
         cell.neighbors.bottomRight &&
-        !cell.neighbors.bottomRight.state.particle
+        !cell.neighbors.bottomRight.state.particle  &&
+        cell.state.particle.movement !== 'fixed'
     ) {
+        console.log('fall right')
         cell.newState.particle = false
         cell.newState.updates  = cell.draw
 
@@ -95,7 +120,7 @@ function statefulToggle(cell){
     }
   }
 
-  // if mouse is intersecting, and drawing, and empty is true
+  // if mouse is intersecting, and drawing, and gameState.type is eraser
   if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height}) &&
     mouse.drawing && 
     gameState.type === 'eraser' 
@@ -110,5 +135,4 @@ function statefulToggle(cell){
         }
       }
   }
-
 }
