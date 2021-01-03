@@ -37,6 +37,14 @@ class Cell {
     if(this.neighborColumns.left )   this.neighbors.bottomLeft = this.neighborColumns.left.cells  [this.id + this.size]
   }
 
+  getNeighbor(number, direction){
+    let currentCell = this
+    for(let steps = 0; steps <= number; steps++){
+      currentCell = currentCell.neighbors[direction]
+    }
+    return currentCell
+  }
+
   adoptNewState(){
     if(this.newState){
       this.state = {...this.newState}

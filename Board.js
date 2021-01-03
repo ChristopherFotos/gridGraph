@@ -1,18 +1,18 @@
 class Board {
-  constructor(width, height, cellSize, stepFunction, updateInterval = 300, cellByCell = true, props, draw) {
-    this.width        = width  ;
-    this.height       = height ;
+  constructor({width, height, cellSize, stepFunction, updateInterval = 300, cellByCell = true, props, draw}) {
+    this.width        = width;
+    this.height       = height;
     this.cellByCell   = cellByCell;
     this.cellSize     = cellSize; 
     this.updateInterval = updateInterval
     this.columns      = {};
     this.cells        = [];
-    this.state        = {}
+    this.state        = {};
     this.props        = props;
     this.draw         = draw
     this.cellLookup   = {};
     this.columnArray  = [];
-    this.subscribers  = []
+    this.subscribers  = [];
     this.stepFunction = stepFunction;
     this.createGrid();
     this.createCells();
@@ -24,7 +24,6 @@ class Board {
     if(!sub.handleUpdate){
       throw new Error('subscirbers must have a method called handleUpdate')
     }
-
     this.subscribers.push(sub)
   }
 
