@@ -50,21 +50,34 @@ function toggle(cell){
   if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height}) &&
     mouse.drawing  
   ){
-        cell.newState.particle  = true
-        cell.newState.updates   = cell.draw
+    cell.newState.particle  = true
+    cell.newState.updates   = cell.draw
   }
 
-  if(!cell.state.particle){
-    if(cell.neighbors.top && cell.neighbors.top.state.particle){
-        cell.newState.particle = true
-        cell.newState.updates   = cell.draw
+  if(cell.state.particle){
+    if(cell.neighbors.bottom && !cell.neighbors.bottom.state.particle){
+        cell.newState.particle = false
+        cell.newState.updates  = cell.draw
 
-        cell.neighbors.top.newState.particle = false
-        cell.neighbors.top.newState.updates  = cell.neighbors.top.draw
+        cell.neighbors.bottom.newState.particle = true
+        cell.neighbors.bottom.newState.updates  = cell.neighbors.top.draw
+    }
+
+    if(cell.neighbors.bottom && cell.neighbors.bottom.state.particle){
+        cell.newState.particle = true
+        cell.newState.updates  = cell.draw
+    
+        cell.neighbors.bottom.newState.particle = true
+        cell.neighbors.bottom.newState.updates  = cell.neighbors.bottom.draw
+    }
+
+    if(!cell.neighbors.bottom){
+        cell.newState.particle = true
     }
   }
+
 }
 
 // instantiating and starting the board
-let board   = new Board(window.innerWidth, window.innerHeight, 15, toggle, 15, true, props, draw)
+let board   = new Board(window.innerWidth /2, window.innerHeight / 2, 2, toggle, 2, true, props, draw)
 board.start()
