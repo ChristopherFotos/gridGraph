@@ -1,3 +1,5 @@
+console.log('hello')
+
 // getting mouse position and storing it in an objects
 let mouse = {
     x: undefined,
@@ -11,26 +13,34 @@ document.addEventListener('mousemove', (e) => {
 
 // setting up functions and variables for the board
 
-function draw(){
-
+function drawcell(){
+  console.log('draw')
+  let cell             = document.createElement('div')
+  let body             = document.getElementsByTagName('body')[0]
+  cell.style.position  = 'absolute'
+  cell.style.left      = this.x  + 'px'
+  cell.style.top       = this.y   + 'px'
+  cell.style.width     = this.size  + 'px'
+  cell.style.height    = this.size  + 'px'
+  cell.style.margin    = 'none'
+  cell.classList.add     ('cell')
+  cell.dataset.cell    = this.HTMLid
+  body.append(cell)
+  this.div = cell
 }
 
 function toggle(cell){
-  if(utils.pointInRect(mouse.x, mouse.y, {x: cell.x, y: cell.y, width: cell.width, height: cell.height})){
-        
-
-        cell.div.classList.add = 'looking'
-        cell.newState.updates = cell.draw
-    
-        console.log(cell.div)
-
-        // for(neighbor in cell.neighbors){
-        //     cell.neighbors[neighbor].newState.active  = true
-        //     cell.neighbors[neighbor].newState.updates = cell.neighbors[neighbor].draw
-        // }
-  }
+  
 }
 
 // instantiating and starting the board
-let board   = new Board(window.innerWidth, window.innerHeight, 100, toggle, 20, true, null, draw)
+let board = new Board({
+  width: window.innerWidth / 2, 
+  height: window.innerHeight / 2, 
+  cellSize: 20, 
+  stepFunction: toggle, 
+  updateInterval:20, 
+  cellByCell: true, 
+  draw: drawcell
+})
 board.start()

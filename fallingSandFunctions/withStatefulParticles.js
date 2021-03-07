@@ -17,6 +17,8 @@ let colors = {
 }
 
 function statefulDraw(){
+    // console.log('draw')
+
     this.board.props.ctx.beginPath();
 
     if(this.state.particle){

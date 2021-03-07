@@ -1,4 +1,28 @@
-let board   = new Board(window.innerWidth, window.innerHeight, 15, findPath, 300)
+function drawcell(){
+    console.log('draw')
+    let cell             = document.createElement('div')
+    let body             = document.getElementsByTagName('body')[0]
+    cell.style.position  = 'absolute'
+    cell.style.left      = this.x  + 'px'
+    cell.style.top       = this.y   + 'px'
+    cell.style.width     = this.size  + 'px'
+    cell.style.height    = this.size  + 'px'
+    cell.style.margin    = 'none'
+    cell.classList.add     ('cell')
+    cell.dataset.cell    = this.HTMLid
+    body.append(cell)
+    this.div = cell
+  }
+
+  let board = new Board({
+    width: window.innerWidth * 2, 
+    height: window.innerHeight * 2, 
+    cellSize: 15, 
+    stepFunction: findPath, 
+    updateInterval:20, 
+    cellByCell: false, 
+    draw: drawcell
+  })
 
 let cells   = Array.from(document.getElementsByClassName('cell'))
 

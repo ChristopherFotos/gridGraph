@@ -5,7 +5,7 @@ canvas.height = window.innerHeight / 2
 const ctx    = canvas.getContext('2d')
 ctx.lineWidth = 1
 
-// getting mouse position and storing it in an objects
+// getting mouse position and storing it in an object
 let mouse = {
     x: undefined,
     y: undefined,

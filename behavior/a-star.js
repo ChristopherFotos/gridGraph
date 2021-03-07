@@ -1,6 +1,6 @@
 function euclidianDistance(c1, c2){
-    let a = (c2.left - c1.left)
-    let b = (c2.top  - c1.top )
+    let a = (c2.x - c1.x)
+    let b = (c2.y  - c1.y )
     console.log('euc dis', Math.sqrt((a * a)  +  (b * b)))
     return  Math.abs(Math.sqrt((a * a)  +  (b * b)))
 }
