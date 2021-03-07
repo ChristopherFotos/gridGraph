@@ -6,18 +6,17 @@ function euclidianDistance(c1, c2){
 }
 
 function calculateG(c, relation){ // relation can be neighbor in the for...in loop
-    console.log('calculateing G of: ', c, 'with a relation of: ', relation)
 
     let g
 
     if (relation === 'topLeft'   || 
         relation ==='bottomLeft' || 
         relation ==='topRight'   || 
-        relation ==='bottomRight'){g = 14; console.log('G INSIDE IF STATEMENT 1: ', g )} else if(
+        relation ==='bottomRight'){g = 14} else if(
         relation === 'top'    ||
         relation === 'bottom' ||
         relation === 'left'   ||
-        relation === 'right'){g = 10; console.log('G INSIDE IF STATEMENT 2: ', g )}
+        relation === 'right'){g = 10}
 
 
     let cameFrom = c.cameFrom  
@@ -26,7 +25,6 @@ function calculateG(c, relation){ // relation can be neighbor in the for...in lo
 
     while(cameFrom && checked.indexOf(cameFrom) === -1){
         path.push(cameFrom)
-        console.log('**PATH**: ', path)
         checked.push(cameFrom)
         if(cameFrom.parent){
             cameFrom = cameFrom.parent
@@ -38,19 +36,6 @@ function calculateG(c, relation){ // relation can be neighbor in the for...in lo
         console.log(g)
     })
 
-
-
-    // while(cameFrom && checked.indexOf(cameFrom) === -1){
-    //     console.log('gScore before adding: ', g)
-    //     console.log('cameFrom gScore: ', cameFrom.gScore)
-    //     g += cameFrom.gScore
-    //     console.log('gScore after adding: ', g)
-    //     checked.push(cameFrom)
-    //     if(cameFrom.parent){
-    //         cameFrom = cameFrom.parent
-    //     } else {cameFrom = false}
-    // }
-    console.log('gScore = ', g)
     return g
 }
 
@@ -72,7 +57,8 @@ function aStar(){
         console.log(nodeInfo.start.gScore)
         let pathG = 0
         for(neighbor in current.neighbors){
-            if(!current.neighbors[neighbor].notNode && !closed.includes(current.neighbors[neighbor])){
+            //added third condition  ***** 
+            if(!current.neighbors[neighbor].notNode && !closed.includes(current.neighbors[neighbor]) && current.neighbors[neighbor] !== undefined){
                 if(!open.includes(current.neighbors[neighbor]) && !closed.includes(current.neighbors[neighbor])){
                     open.push(current.neighbors[neighbor])
                 }
