@@ -1,5 +1,5 @@
 class Cell {
-  constructor(left, top, size, column, id, cellObject, neighborColumns) {
+  constructor(x, y, size, column, id, cellObject, neighborColumns) {
     this.id              = id
     this.HTMLid          = column.id.toString() + '_' + id.toString()
     this.state           = {} 
@@ -8,27 +8,18 @@ class Cell {
     this.column          = column
     this.board           = this.column.board
     this.neighborColumns = neighborColumns 
-    this.left            = left;
-    this.top             = top;
+    this.x               = x;
+    this.y               = y;
     this.size            = size; 
-    this.neighbors       = {}    
-    this.addToLookupTable()
-    this.draw()          
+    this.width           = size;
+    this.height          = size;
+    this.neighbors       = {}  ; 
+    this.addToLookupTable()    ;
+    this.draw()                ;
   }
 
   draw() {
-    let cell             = document.createElement('div')
-    let body             = document.getElementsByTagName('body')[0]
-    cell.style.position  = 'absolute'
-    cell.style.left      = this.left  + 'px'
-    cell.style.top       = this.top   + 'px'
-    cell.style.width     = this.size  + 'px'
-    cell.style.height    = this.size  + 'px'
-    cell.style.margin    = 'none'
-    cell.classList.add     ('cell')
-    cell.dataset.cell    = this.HTMLid
-    body.append(cell)
-    this.div = cell
+    this.board.draw.bind(this)()
   }
 
   addToLookupTable(){
@@ -43,15 +34,22 @@ class Cell {
     if(this.neighborColumns.left )  this.neighbors.topLeft     = this.neighborColumns.left.cells  [this.id - this.size]
     if(this.neighborColumns.right)  this.neighbors.topRight    = this.neighborColumns.right.cells [this.id - this.size]
     if(this.neighborColumns.right)  this.neighbors.bottomRight = this.neighborColumns.right.cells [this.id + this.size]
-    if(this.neighborColumns.left)   this.neighbors.bottomLeft  = this.neighborColumns.left.cells  [this.id + this.size]
+    if(this.neighborColumns.left )   this.neighbors.bottomLeft = this.neighborColumns.left.cells  [this.id + this.size]
+  }
+
+  getNeighbor(number, direction){
+    let currentCell = this
+    for(let steps = 0; steps <= number; steps++){
+      currentCell = currentCell.neighbors[direction]
+    }
+    return currentCell
   }
 
   adoptNewState(){
     if(this.newState){
-      this.state = this.newState
+      this.state = {...this.newState}
       if(this.newState.updates){
-        let boundUpdate = this.newState.updates.bind(this)
-        boundUpdate()
+        this.newState.updates.bind(this)() 
       }
     }
     this.newState = {}

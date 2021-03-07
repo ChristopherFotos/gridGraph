@@ -1,15 +1,18 @@
 class Board {
-  constructor(width, height, cellSize, stepFunction, updateInterval, cellByCell = true) {
-    this.width        = width  ;
-    this.height       = height ;
+  constructor({width, height, cellSize, stepFunction, updateInterval = 300, cellByCell = true, props, draw}) {
+    this.width        = width;
+    this.height       = height;
     this.cellByCell   = cellByCell;
     this.cellSize     = cellSize; 
     this.updateInterval = updateInterval
     this.columns      = {};
     this.cells        = [];
-    this.state        = {}
+    this.state        = {};
+    this.props        = props;
+    this.draw         = draw
     this.cellLookup   = {};
     this.columnArray  = [];
+    this.subscribers  = [];
     this.stepFunction = stepFunction;
     this.createGrid();
     this.createCells();
@@ -17,6 +20,12 @@ class Board {
     this.findCellNeighbors();
   }
 
+  addSubscriber(sub){
+    if(!sub.handleUpdate){
+      throw new Error('subscirbers must have a method called handleUpdate')
+    }
+    this.subscribers.push(sub)
+  }
 
   createGrid() {
     //Create columns
@@ -53,34 +62,35 @@ class Board {
   }
 
   update(board){
-    console.log(board.cellByCell)
-
-      if(board.cellByCell){board.cells.forEach(c => {
-        board.stepFunction(c)
+      this.subscribers.forEach((s)=>{
+        s.handleUpdate()
       })
 
       board.cells.forEach(c => {
-        if(c.newState){
+        board.stepFunction(c)
+      })
+
+      if(board.cellByCell){
+      board.cells.forEach(c => {
         c.adoptNewState()
-        if(c.newState.updates){
-          c.newState.updates()
-        }
-        }
-      })}
+      })
+
+
+    }
     
     if(!board.cellByCell){
-      console.log('false running')
       board.stepFunction()
     }
   }
 
   start(){
-    this.stopID = setInterval(this.update, this.updateInterval, this)
+    // shouldn't this.update be wrapped in an arrow function with 'this' as an argument?
+    this.stopID = setInterval(()=>this.update(this), this.updateInterval, this)
   }
 
 
   stop(){
-    if(this.stopID)clearInterval(this.stopID)
+    if(this.stopID) clearInterval(this.stopID)
   }
 
   clear(){

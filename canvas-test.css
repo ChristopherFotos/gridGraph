@@ -1,0 +1,12 @@
+* {
+    font-family: Arial;
+    font-size : 16px
+}
+
+.cell {
+
+    transition: all 0.1s ease-in-out;
+    background-color: #101010;
+    box-shadow: inset 0px 0px 1px 0px rgba(175,187,242,0.3);
+    border: 1px solid green;
+}
