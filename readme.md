@@ -27,3 +27,8 @@ What's there to say? It's snake. Use the WASD keys to move around, and don't hit
 <h2>Using the Grid Graph</h2>
 
 
+
+
+This section will be expanded soon. Right now the gridgraph paints divs to the screen for every cell, which is obviously inefficient and 
+suits very few use cases. Before I write out the usage instructions, I want to make it so that it just creates the grid as a data structure,
+leaving it up to the user how it's actually drawn. 
